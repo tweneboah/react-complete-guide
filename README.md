@@ -1,2 +1,2 @@
-# react-complete-guide-2020
+# react-complete-guide
 From beginner to advance
