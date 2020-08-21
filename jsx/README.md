@@ -6,7 +6,7 @@ React is a JavaScript library for building user interfaces
 
 1. It's use to describe what the UI should look like
 2. JSX produces React “elements” eg: (h1, div.....)
-3.JSX (short for JavaScript eXtension) is a React extension that makes it easy for web developers to modify their DOM by using simple, HTML-style code
+   3.JSX (short for JavaScript eXtension) is a React extension that makes it easy for web developers to modify their DOM by using simple, HTML-style code
 
 # Virtual DOM
 
@@ -20,74 +20,84 @@ This kind of selective updating takes less computing power and less loading time
 
 # Embedding Expressions in JSX
 
+1. To embed an expression or variable into jsx wrap it on a curly braces
+2. You can embed js expressions, statements and functions
 
+## Passing varible to jsx
 
+```js
+const name = 'Emmanuel Tweneboah';
+const element = <h1>Hi {name}</h1>;
+ReactDOM.render(element, document.getElementById('root'));
+```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Passing a function to jsx with data
 
-## Available Scripts
+```js
+//Data
+const userData = {
+  name: 'Joe Doe',
+};
 
-In the project directory, you can run:
+// Function to take the userData
+//function
+function printMyName(user) {
+  return user.name;
+}
+```
 
-### `yarn start`
+## Pass this function to jsx
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```js
+//passing function to jsx .This type of function is call immediately return function
+const element2 = <h1>Hi {printMyName(userData)}</h1>;
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Render to the DOM
 
-### `yarn test`
+```js
+//HOC
+ReactDOM.render(element2, document.getElementById('root'));
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**ReactDOM.render** is HOF that accept a function and variable as argument
 
-### `yarn build`
+## JSX is an Expression Too
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can use JSX inside of if statements and for loops, assign it to variables, accept it as arguments, and return it from functions:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```js
+//JSX is an Expression
+function printMyName2(user) {
+  if (user) {
+    return <p>Hi {user.name} you are welcome</p>;
+  } else {
+    return <p>You are a stranger</p>;
+  }
+}
+const element3 = <h1>Hi {printMyName2(userData)}</h1>;
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+//HOC, this takes jsx element  and DOM root
+ReactDOM.render(element3, document.getElementById('root'));
+```
 
-### `yarn eject`
+# Specifying Attributes with JSX
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```html
+const element =
+<div tabindex="0"></div>
+;
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. For example you want to add certain className base on condition
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```html
+<div className="`${age">4 ? 'green' : 'red'}`></div>
+;
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+2. Embed a JavaScript expression in an attribute
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```js
+const element = <img src={user.avatarUrl} />;
+```
