@@ -1,68 +1,68 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Rendering Elements
 
-## Available Scripts
+- React elements are like the pieces of html tags with attribute or data
 
-In the project directory, you can run:
+```html
+<div>
+  <h1>Your age is 32</h1>
+  <p>
+    When these elements are created and rendered into the DOM it cannot be
+    changed
+  </p>
+</div>
+```
 
-### `yarn start`
+1. Elements are the smallest building blocks of React apps.
+2. An element describes what you want to see on the screen:
+3. React elements are plain objects, and are cheap to create. React DOM takes care of updating the DOM to match the React elements.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```js
+const element = <h1>Hello, world</h1>;
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+4. Elements are what components are “made of”
 
-### `yarn test`
+# Rendering an Element into the DOM
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- We only have one div root where we render our application and this is managed by React DOM
 
-### `yarn build`
+```js
+const elementToDisplay = <h1>Hello, world</h1>;
+ReactDOM.render(elementToDisplay, document.getElementById('root'));
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Updating the Rendered Element
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- React elements are immutable. Once you create an element, you can’t change its children or attributes. An element is like a single frame in a movie: it represents the UI at a certain point in time.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- The only way to update the UI is to create a new element, and pass it to **\*ReactDOM.render()**
 
-### `yarn eject`
+### DEMO
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```js
+// How react DOM updates
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+//In the below code we create a function and we pass it to the React DOM and
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+const ticking = () => {
+  const element = (
+    <div>
+      <h1>React Rendering</h1>
+      <h1>The time is {new Date().toLocaleTimeString()}</h1>
+    </div>
+  );
+  ReactDOM.render(element, document.getElementById('root'));
+};
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+setInterval(ticking, 100);
+```
 
-## Learn More
+- It calls ReactDOM.render() every second from a setInterval() callback
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# React Only Updates What’s Necessary
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+React DOM compares the element and its children to the previous one, and only applies the DOM updates necessary to bring the DOM to the desired state.
 
-### Code Splitting
+Even though we create an element describing the whole UI tree on every tick, only the text node whose contents have changed gets updated by React DOM.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+In our experience, thinking about how the UI should look at any given moment, rather than how to change it over time, eliminates a whole class of bugs.
